@@ -1,45 +1,89 @@
-# Instax
-## Author: github.com/trh4ckn0n
-## IG: instagram.com/trhacknon
-### Don't copy this code without give me the credits, 
-#### from https://github.com/dhasirar/instax
-#### thx to dhasirar for the base
+<h1 align="center">InstaBrute Max</h1>
 
-Instax is an tool to perform multi-threaded brute force attack against Instagram, this script can bypass login limiting and it can test infinite number of passwords with a rate of +400 passwords/min using 20 threads.
-
-## Legal disclaimer:
-Usage of Instax for attacking targets without prior mutual consent is illegal. It's the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program.
+<p align="center">
+  <strong>Bruteforce Instagram | 100% Bash | TOR + fzf + Session Save</strong><br>
+  <em>Par @trhacknon (origine) • Optimisé par AutoExpert</em>
+</p>
 
 ## Proof:
 ![insta](https://user-images.githubusercontent.com/50268203/81773518-694f8800-94b6-11ea-859d-9c2362d71dd4.gif)
 
-### Features
-- Multi-thread (400 pass/min, 20 threads)
-- Save/Resume sessions
-- Anonymous attack through TOR
-- Check valid usernames
-- Default password list (best +39k 8 letters)
-- Check and Install all dependencies
 
-### Usage:
-```
+---
+
+### ✨ Présentation
+
+**InstaBrute Max** est un script Bash avancé de brute-force Instagram, enrichi pour être :
+
+- plus **interactif** (menu fzf)
+- plus **fiable** (IP dynamique via TOR)
+- plus **ergonomique** (session resume + UI terminal stylée)
+- et toujours 100% shell, sans Python, sans bullshit.
+
+---
+
+### ⚙️ Fonctionnalités clés
+
+- [x] Support TOR complet (rotation IP, vérification auto)
+- [x] Sélection de wordlist via `fzf` (optionnelle)
+- [x] Détection de profils publics/privés
+- [x] Gestion de session automatique et manuelle (`--resume`)
+- [x] Interface terminal colorée + prompts ludiques
+- [x] Compatible Linux (Ubuntu, Debian...)
+
+---
+
+### 🚀 Installation rapide
+
+```bash
 git clone https://github.com/trh4ckn0n/instax.git
-cd instax
-chmod +x instax.sh
-service tor start
-bash instax.sh
+cd instabrute-max
+chmod +x install.sh instax.sh
+./install.sh
 ```
 
-### Install requirements (Curl, Tor, Openssl):
+---
 
+### 🎯 Utilisation
+
+#### Bruteforce classique :
+```bash
+./instax.sh
 ```
-chmod +x install.sh
-bash install.sh
+
+#### Reprise d'une session sauvegardée :
+```bash
+./instax.sh --resume
 ```
 
-### How it works?
-Tool uses TOR and rotating the ip address to avoid blocking. 
+> Pense à créer une wordlist `passwords.lst` ou à en ajouter plusieurs `.lst`
 
-### Donate!
-Support the authors:
-https://paypal.me/dhasirar
+---
+
+### 📦 Fichiers générés
+
+- `found.instashell` → login valides trouvés
+- `sessions/` → sauvegardes de sessions (reprises automatiques)
+- `passwords.lst` → wordlist par défaut
+
+---
+
+### 🔐 Avertissement
+
+> Ce projet est à but **éducatif uniquement**.  
+> Tu es **le seul responsable** de l'utilisation de cet outil.
+
+---
+
+### ❤️ Merci
+
+Basé sur le travail de [trhacknon](https://github.com/trh4ckn0n).  
+---
+
+### 🧠 Prochaines idées ?
+
+- [ ] Ajout d'un mode stealth avec `proxychains`
+- [ ] Intégration Telegram pour notification de succès
+- [ ] Génération automatique de wordlist avec `cupp`
+
+---
