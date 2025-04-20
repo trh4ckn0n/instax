@@ -54,16 +54,35 @@ printf "\e[1;50m\e[40m  Instagram Brute Force Tool by @trhacknon(IG)   \e[0m\n"
 printf "\n"
 }
 
+function check_instagram_profile() {
+    local username=$1
+    local profile_data=$(curl -L -s "https://www.instagram.com/$username/" -H "User-Agent: Mozilla/5.0")
+    
+    if echo "$profile_data" | grep -q "Page Not Found"; then
+        return 1
+    fi
+    
+    printf "\e[1;92m[*] Profil trouvé:\e[0m\n"
+    printf "\e[1;92m[*] Username:\e[0m \e[1;77m%s\e[0m\n" "$username"
+    if echo "$profile_data" | grep -q "is_private.:true"; then
+        printf "\e[1;92m[*] Status:\e[0m \e[1;77mPrivé\e[0m\n\n"
+    else
+        printf "\e[1;92m[*] Status:\e[0m \e[1;77mPublic\e[0m\n\n"
+    fi
+    return 0
+}
+
 function start() {
 banner
 #checkroot
 dependencies
 read -p $'\e[1;92mUsername account: \e[0m' user
-checkaccount=$(curl -L -s https://www.instagram.com/$user/ | grep -c "the page may have been removed")
-if [[ "$checkaccount" == 1 ]]; then
-printf "\e[1;91mInvalid Username! Try again\e[0m\n"
-sleep 1
-start
+
+printf "\e[1;77m[*] Vérification du profil Instagram...\e[0m\n"
+if ! check_instagram_profile "$user"; then
+    printf "\e[1;91m[!] Profil invalide! Réessayez\e[0m\n"
+    sleep 1
+    start
 else
 default_wl_pass="passwords.lst"
 read -p $'\e[1;92mPassword List (Enter to default list): \e[0m' wl_pass
