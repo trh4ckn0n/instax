@@ -1,8 +1,8 @@
-<h1 align="center">InstaBrute Max</h1>
+<h1 align="center">instax | Trhacknon's Modz</h1>
 
 <p align="center">
   <strong>Bruteforce Instagram | 100% Bash | TOR + fzf + Session Save</strong><br>
-  <em>Par @trhacknon (origine) • Optimisé par AutoExpert</em>
+  <em>Par @trhacknon (origine)</em>
 </p>
 
 ## Proof:
@@ -13,7 +13,7 @@
 
 ### ✨ Présentation
 
-**InstaBrute Max** est un script Bash avancé de brute-force Instagram, enrichi pour être :
+**instax** est un script Bash avancé de brute-force Instagram, enrichi pour être :
 
 - plus **interactif** (menu fzf)
 - plus **fiable** (IP dynamique via TOR)
@@ -37,7 +37,7 @@
 
 ```bash
 git clone https://github.com/trh4ckn0n/instax.git
-cd instabrute-max
+cd instax
 chmod +x install.sh instax.sh
 ./install.sh
 ```
