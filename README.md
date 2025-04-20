@@ -1,7 +1,10 @@
 # Instax
-## Author: github.com/dhasirar
-## IG: instagram.com/dhasirar
+## Author: github.com/trh4ckn0n
+## IG: instagram.com/trhacknon
 ### Don't copy this code without give me the credits, 
+#### from https://github.com/dhasirar/instax
+#### thx to dhasirar for the base
+
 Instax is an tool to perform multi-threaded brute force attack against Instagram, this script can bypass login limiting and it can test infinite number of passwords with a rate of +400 passwords/min using 20 threads.
 
 ## Legal disclaimer:
@@ -20,7 +23,7 @@ Usage of Instax for attacking targets without prior mutual consent is illegal. I
 
 ### Usage:
 ```
-git clone https://github.com/dhasirar/instax.git
+git clone https://github.com/trh4ckn0n/instax.git
 cd instax
 chmod +x instax.sh
 service tor start
