@@ -55,19 +55,38 @@ exit 1
 fi
 
 }
+#!/bin/bash
 
 banner() {
+  clear
+  printf "\e[1;97m     _                              \e[0m\n"
+  printf "\e[1;96m _  | |                _            \e[0m\n"
+  printf "\e[1;95m( \ | | ____    ___  _| |_  _____   \e[0m\n"
+  printf "\e[1;93m ) )| ||  _ \  /___)(_   _)(____ |  \e[0m\n"
+  printf "\e[1;95m(_/ | || | | ||___ |  | |_ / ___ |  \e[0m\n"
+  printf "\e[1;96m    |_||_| |_|(___/    \__)\_____|  \e[0m\n"
+  printf "\n"
 
-printf "\e[1;77m     _                              \e[0m\n"
-printf "\e[1;77m _  | |                _            \e[0m\n"
-printf "\e[1;77m( \ | | ____    ___  _| |_  _____   \e[0m\n"
-printf "\e[1;80m ) )| ||  _ \  /___)(_   _)(____ |  \e[0m\n"
-printf "\e[1;77m(_/ | || | | ||___ |  | |_ / ___ |  \e[0m\n"
-printf "\e[1;77m    |_||_| |_|(___/    \__)\_____|  \e[0m\n"
-printf "\n"
-printf "\e[1;50m\e[40m  Instagram Brute Force Tool by @trhacknon(IG)   \e[0m\n"
-printf "\n"
+  printf "\e[1;99m\e[41m
+  _                                
+ |_    ._   _   _ _|_   | |  _   | 
+ |_ >< |_) (/_ (_  |_   |_| _>   o 
+       |                           
+\e[0m\n"
+
+  printf "\n"
+
+  colors=(31 32 33 34 35 36 37)
+  text="Welcome to TRHACKNON Mod'z of Instagram Brute Force Tool [Interactive Edition]"
+
+  for (( i=0; i<${#text}; i++ )); do
+    color=${colors[$RANDOM % ${#colors[@]}]}
+    printf "\e[1;${color}m${text:$i:1}\e[0m"
+    sleep 0.1
+  done
+  printf "\n\n"
 }
+
 
 function check_instagram_profile() {
     local username=$1
@@ -89,6 +108,7 @@ function check_instagram_profile() {
 
 function start() {
 banner
+
 #checkroot
 dependencies
 read -p $'\e[1;92mUsername account: \e[0m' user
