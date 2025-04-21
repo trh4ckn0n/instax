@@ -1,6 +1,6 @@
 #!/bin/bash
-# Coded by: github.com/trh4ckn0n
-# Instagram: @trhacknon
+# Coded by: github.com/dhasirar
+# Instagram: @dhasirar
 
 trap 'store;exit 1' 2
 string4=$(openssl rand -hex 32 | cut -c 1-4)
@@ -65,23 +65,21 @@ banner() {
   printf "\e[1;93m ) )| ||  _ \  /___)(_   _)(____ |  \e[0m\n"
   printf "\e[1;95m(_/ | || | | ||___ |  | |_ / ___ |  \e[0m\n"
   printf "\e[1;96m    |_||_| |_|(___/    \__)\_____|  \e[0m\n"
-  printf "\n"
-
-  printf "\e[1;99m\e[41m
-  _                                
- |_    ._   _   _ _|_   | |  _   | 
- |_ >< |_) (/_ (_  |_   |_| _>   o 
-       |                           
-\e[0m\n"
 
   printf "\n"
 
   colors=(31 32 33 34 35 36 37)
   text="Welcome to TRHACKNON Mod'z of Instagram Brute Force Tool [Interactive Edition]"
+  textt="
+ +-+-+-+-+-+-+ +-+-+ +-+
+ |E|x|p|e|c|t| |U|s| |!|
+ +-+-+-+-+-+-+ +-+-+ +-+
+"
 
-  for (( i=0; i<${#text}; i++ )); do
+
+  for (( i=0; i<${#textt}; i++ )); do
     color=${colors[$RANDOM % ${#colors[@]}]}
-    printf "\e[1;${color}m${text:$i:1}\e[0m"
+    printf "\e[1;${color}m${textt:$i:1}\e[0m"
     sleep 0.1
   done
   printf "\n\n"
